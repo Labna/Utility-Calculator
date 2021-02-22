@@ -15,11 +15,15 @@ to get help use :
 ``` >>> calculator('help') ```
 
 #### exemples
-1. ```python
+1.
+```python
 >>> calculator("9h52m10s = s")
-35530.0s ```
-2. ```python
+35530.0s 
+```
+2.
+```python
 >>> calculator('82280s - 39713s')
-11h49m27s ```
+11h49m27s
+```
 
 
