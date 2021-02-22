@@ -1,0 +1,306 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# import sys
+import re
+
+
+dicNumber=[]
+def initDicNumber():
+  #  1 2 3 4 5 6 7 8 9 A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z  Α  Β  Γ  Δ  Ε  Ζ  Η  Θ  Ι  Κ  Λ  Μ  Ν  Ξ  Ο  Π  Ρ  ς  Σ  Τ  Υ  Φ  Χ  Ψ  Ω  α  β  γ  δ  ε  ζ  η  θ  ι  κ  λ  μ  ν  ξ  ο  π  ρ  ς  σ  τ  υ  φ  χ  ψ  ω   
+  #                   10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99100101102103104105106107108109110111
+  # dicNumber=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','?','?','?','?','?','?','?','?','?','?','?','?','?','?','?','?','?','?','.','?','?','?','?','?']
+  # dicNumber=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a'.decode('utf-8'),'ß'.decode('utf-8'),'?'.decode('utf-8'),'d'.decode('utf-8'),'e'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'µ'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'p'.decode('utf-8'),'?'.decode('utf-8'),'s'.decode('utf-8'),'t'.decode('utf-8'),'?'.decode('utf-8'),'f'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8'),'?'.decode('utf-8')]
+  global dicNumber
+  dicNumber = ['0','1','2','3','4','5','6','7','8','9',
+               'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+               'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+               'Α','Β','Γ','Δ','Ε','Ζ','Η','Θ','Ι','Κ','Λ','Μ','Ν','Ξ','Ο','Π','Ρ','ς','Σ','Τ','Υ','Φ','Χ','Ψ','Ω',
+               'α','β','γ','δ','ε','ζ','η','θ','ι','κ','λ','μ','ν','ξ','ο','π','ρ','ς','σ','τ','υ','φ','χ','ψ','ω']
+# initDicNumber()
+
+def safeDicNumber():
+  global dicNumber
+  dicNumber = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+
+def majDicNumber():
+  global dicNumber
+  dicNumber = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
+def minDicNumber():
+  global dicNumber
+  dicNumber = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+
+def invertDicNumber():
+  global dicNumber
+  dicNumber = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
+def base64DicNumber():
+  global dicNumber
+  dicNumber = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9','+','/']
+
+safeDicNumber()
+
+date_re = [
+  [re.compile('([\d\.]+?)C'), 1],
+  [re.compile('([\d\.]+?)D'), 10],
+  [re.compile('([\d\.]+?)y'), 10],
+  [re.compile('([\d\.]+?)d'), 365.25],
+  [re.compile('([\d\.]+?)h'), 24],
+  [re.compile('([\d\.]+?)m(?!s)'), 60],
+  [re.compile('([\d\.]+?)s'), 60],
+  [re.compile('([\d\.]+?)ms'), 1000] ]
+operators = [ # [detect, convertion, number value]
+  ['+', '+', ''],
+  ['-', '-', ''],
+  ['*', '*', ''],
+  ['^', '**',''],
+  ['/', '/', ''],
+  ['%', '%', ''],
+  ['=', False,'!']]
+
+
+def calculator(inoperation = False, newDicNumber= False, clear=False) :
+  if newDicNumber and not customDicNumber(newDicNumber):
+    return
+  while True : # my game loop
+    input = ""
+    if inoperation :
+      input = inoperation.strip()
+    else :
+      input = raw_input('Enter an operation (or help)\n> ').strip() # remove firsts and lasts spaces/tab...
+    date_format = False
+    
+    if input == "help" :
+      print('write operation like :\n' +
+        '  5 + 5\n' +
+        '  15 8 + 21 (the 2nd number (8) is the base)\n' +
+        '  438m = h (get the decimal value of hour, otherwise get full convertion (like : 1y2d3h4m5s6ms)\n' +
+        '  5h31m0s145ms + 2y4d18h32m42s + 4h32s + 484s (time operation is possible (the order is : CDydhmsms Century Decade year day hour minute second milisecond (ms is the only 2 char unit))\n' +
+        '  45 13 * 12 4 = 16 (the answer will be converted by the base mentionned after the =)\n' +
+        '  newDic (to change current dicNumber)\n'+
+        '  curDic (to get current dicNumber)\n'
+        'press enter to leave (empty entry)'
+      )
+      if inoperation :
+        print("As second argument you can change the number dictionnary\n" +
+          "  (default) calculator(\"Exemple 62 + of 62 + Calcul 62 = 19\", \"safe\") ->  safe=[0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]\n"+
+          "  calculator(\"def 26\", \"min\") -> min=[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]\n"+
+          "  calculator(\"SPQR 26\", \"maj\") -> maj=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]\n"+
+          "  calculator(newDicNumber=\"invert\") -> invert=[0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]\n"+
+          "  calculator(newDicNumber=\"base64\") -> base64=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,+,/]\n"+
+          "  or you can use yours, exemple: \"calculator(\"PONY 26\", newDicNumber=['Z','X','Y','P','W','V','U','T','S','R','Q','I','M','L','K','J','N','H','G','F','O','E','D','C','B','A']\"\n"+
+          "  the dictionnary is kept for future use into global variable : dicNumber")
+    elif input == "newDic":
+      customDicNumber(raw_input('Enter newDicNumber (min, maj, init, safe, invert, base64, [custom])\nnewDicNumber=').strip())
+    elif input == "curDic":
+      global dicNumber
+      print(dicNumber)
+    elif input == "" :
+      break
+    else :
+      operation = ""
+      outbase=""
+      number = ""
+      numlist=[]
+      operlist=[]
+      for txt in input.split(' ') :
+        if len(txt) == 1 :
+          conti = False
+          for ope in operators :
+            if txt == ope[0] :
+              if ope[1] :
+                operlist.append(ope[1])
+              number, date_format = normal_number(number, date_format)
+              numlist.append(number)
+              number=ope[2]
+              conti = True
+          if conti :
+            continue
+        if number == "!" :
+          outbase = txt
+        elif number == "" :
+          number = txt
+        else : # un nombre est enregisterer il faut convertir sa base
+          decalage = number.find(".")
+          if decalage == -1 :
+            decalage = number.find(",")
+            if decalage == -1 :
+              decalage = 0
+            else :
+              number = number.replace(",","")
+              decalage = len(number) - decalage
+          else :
+            number = number.replace(".","")
+            decalage = len(number) - decalage
+          number = str(todec(number, txt))
+          if decalage != 0 :
+            number = "{}.{}".format(number[:len(number) - decalage], number[len(number) - decalage:])
+      if outbase == "" :
+        number, date_format = normal_number(number, date_format)
+        numlist.append(number)
+      if (len(numlist) - 1) == len(operlist) :
+        operation = '{}'.format(numlist[0])
+        i = 1
+        for op in operlist:
+          operation = '{} {} {}'.format(operation, op, numlist[i])
+          i+=1
+        result = eval(operation)
+        if outbase != "" and not date_format :
+          result = tobase(result, outbase)
+          print('{} base: {}'.format(result, outbase))
+        elif outbase == "" and not date_format :
+          print('{} base: 10'.format(result))
+        elif outbase != "" and date_format :
+          result = unit_date(result, outbase)
+          print('{}{}'.format(result, outbase))
+        else :
+          result = mstodate(result)
+          print('{}'.format(result))
+      else :
+        print('Missing number or operand in {} (len : {} != {})'.format(input, (len(numlist) - 1), len(operlist)))
+    if inoperation :
+      break
+
+
+def normal_number (number, date_format) :
+  ### Convert number with strange format like hour and date C,D,y,w,d,h,m,s,ms ###
+  final = 0
+  number = number.replace(',','.')
+  if re.search('(\d([CDywdhms]|ms))',number) :
+    date_format = True
+    for date in date_re :
+      unit = date[0].search(number)
+      found = 0
+      if unit :
+        number = number.replace(unit.group(0), "")
+        found = float(todec(unit.group(1), 10))
+      final = float(found) + float(final * date[1])
+    if number != "" :
+      print('Error unknow date format, left : {} after filtering known values'.format(number))
+    number = final
+  else :
+    decalage = number.find(".")
+    if decalage == -1 :
+      number = todec(number, 10)
+    else :
+      number = number.replace(".","")
+      decalage = len(number) - decalage
+      number = str(todec(number, 10))
+      number = "{}.{}".format(number[:len(number) - decalage], number[len(number) - decalage:])
+  return [number, date_format]
+
+def todec (innumber, base):
+  if len(innumber) > 1 :
+    decalage = innumber.find(".")
+    if decalage != -1:
+      innumber = innumber.replace(".","")
+      decalage = len(innumber) - decalage
+    if innumber[-1] != "]" :
+      innumber, unit = innumber[:-1], innumber[-1]
+      try :
+        value=dicNumber.index(unit)
+      except:
+        value = int(unit)
+      value += (int(todec(innumber, base)) * int(base))
+    else :
+      position = innumber.rfind('[')
+      innumber , unit = innumber[:position], innumber[position:]
+      value = int(unit.strip('[]')) + (int(todec(innumber, base)) * int(base))
+    if decalage != -1:
+      value = str(value)
+      value= float("{}.{}".format(value[:len(value) - decalage], value[len(value) - decalage:]))
+    return value
+  elif len(innumber) == 1 :
+    value = 0
+    try :
+      value = dicNumber.index(innumber)
+    except:
+      value = innumber
+    return value
+  else :
+    return 0
+
+
+def tobase (innumber, base):
+  number=""
+  neg = False
+  if innumber < 0 :
+    innumber = abs(innumber)
+    neg = True
+  while int(innumber) != 0:
+    scale = int(innumber) % int(base)
+    if scale < len(dicNumber) :
+      number = dicNumber[int(innumber) % int(base)] + number
+    else :
+      number = '[{}]{}'.format(scale, number)
+    innumber = (int(innumber) - scale) / int(base)
+  return ('' if not neg else '-' ) + number.decode('latin_1')
+
+
+def unit_date(date, unit) :
+  converter = {
+    'C' : 86400000 * 36525,
+    'D' : 315576000000, # 86400000 * 3652.5,
+    'y' : 31557600000, # 86400000 * 365.25,
+    'w' : 86400000 * 7,
+    'd' : 86400000,
+    'h' : 3600000,
+    'm' : 60000,
+    's' : 1000,
+    'ms': 1
+  }
+  return str(float(date) / converter[unit] )
+
+  
+def mstodate(ms) :
+  string = ""
+  unit  = ['y','d','h','m','s','ms']
+  value = [31557600000, 86400000, 3600000, 60000, 1000, 1]
+  count = 0
+  for uni in unit : 
+    scale = int(float(ms) / value[count])
+    if scale > 0 :
+      string += str(scale) + uni
+      ms = float(ms) - (scale * value[count])
+    count+=1
+  return string
+
+def customDicNumber(newDicNumber) :
+  global dicNumber
+  if hasattr(newDicNumber, 'append'):
+    dicNumber = newDicNumber
+  elif hasattr(newDicNumber, 'format'):
+    if newDicNumber == "min" :
+      minDicNumber()
+    elif newDicNumber == "maj" :
+      majDicNumber()
+    elif newDicNumber == "init" :
+      initDicNumber()
+    elif newDicNumber == "safe" :
+      safeDicNumber()
+    elif newDicNumber == "invert" :
+      invertDicNumber()
+    elif newDicNumber == "base64" :
+      base64DicNumber()
+    else :
+      print("Error unknown {} standart format".format(newDicNumber))
+      return False
+  else :
+    print("Error unknown newDicNumber")
+    return False
+  return True
+  
+  
+hfrom = hto = hdif = ['0','0','0']
+def flathour(hfrom) :
+  hto[1] = (int(hto[0]) - int(hfrom[0])) * 60 + int(hto[1])
+  hto[2] = (int(hto[1]) - int(hfrom[1])) * 60 + int(hto[2])
+
+  hdif[2] = (hto[2] - int(hfrom[2])) % 60
+  hdif[1] = int(hto[2] / 60) % 60
+  hdif[0] = int(hto[2] / 3600) % 60
+
+  print('diff = {}:{}:{}'.format(hdif[2],hdif[1],hdif[0]))
+
+print("Calculator charged !")
