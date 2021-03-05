@@ -47,3 +47,10 @@ As second argument you can change the number dictionnary
   the dictionnary is kept for future use into global variable : dicNumber
 ```
 
+Version review :
+V1.1 : add bracket support '() [] {}'
+
+```python
+>>> calculator("( 34384s - 2550s ) * ( 25433 / 83460s )")
+2h41m40s864ms
+```

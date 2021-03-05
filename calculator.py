@@ -58,6 +58,13 @@ operators = [ # [detect, convertion, number value]
   ['/', '/', ''],
   ['%', '%', ''],
   ['=', False,'!']]
+brackets =[
+  ['(', True],
+  ['[', True],
+  ['{', True],
+  [')', False],
+  [']', False],
+  ['}', False]]
 
 
 def calculator(inoperation = False, newDicNumber= False, clear=False) :
@@ -104,16 +111,23 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
       number = ""
       numlist=[]
       operlist=[]
+      bracklist=[]
       for txt in input.split(' ') :
         if len(txt) == 1 :
           conti = False
-          for ope in operators :
+          for ope in operators : # find operator and add to the list
             if txt == ope[0] :
               if ope[1] :
                 operlist.append(ope[1])
               number, date_format = normal_number(number, date_format)
               numlist.append(number)
               number=ope[2]
+              conti = True
+          if conti :
+            continue
+          for bra in brackets : # find brackets record if it open or close related to the number
+            if txt == bra[0] :
+              bracklist.append([len(numlist), bra[1]])
               conti = True
           if conti :
             continue
@@ -139,12 +153,34 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
       if outbase == "" :
         number, date_format = normal_number(number, date_format)
         numlist.append(number)
-      if (len(numlist) - 1) == len(operlist) :
-        operation = '{}'.format(numlist[0])
+      if (len(numlist) % 2) != (len(operlist) % 2) :
+        operation = ""
+        poplist = []
+        for indx, bra in enumerate(bracklist) :
+            if bra[0] == 0:
+              operation += '( ' if bra[1] else ' )';
+              poplist.append(indx)
+        for ind in sorted(poplist, reverse=True):
+          bracklist.pop(ind)
+        operation += '{}'.format(numlist[0])
         i = 1
+        opbra = ''
         for op in operlist:
-          operation = '{} {} {}'.format(operation, op, numlist[i])
+          poplist = []
+          for indx, bra in enumerate(bracklist) :
+            if bra[0] == i-1 and not bra[1]:
+              operation += ' )'
+              poplist.append(indx)
+            if bra[0] == i and bra[1] :
+              opbra += '( '
+              poplist.append(indx)
+          for ind in sorted(poplist, reverse=True):
+            bracklist.pop(ind)
+          operation = '{} {} {}{}'.format(operation, op, opbra, numlist[i])
           i+=1
+          opbra = ''
+        if len(bracklist) != 0 :
+          operation += ' )' * len(bracklist)
         result = eval(operation)
         if outbase != "" and not date_format :
           result = tobase(result, outbase)
