@@ -46,6 +46,9 @@ As second argument you can change the number dictionnary
   or you can use yours, exemple: "calculator("PONY 26", newDicNumber=['Z','X','Y','P','W','V','U','T','S','R','Q','I','M','L','K','J','N','H','G','F','O','E','D','C','B','A']"
   if a number is out of the dictionnary size it can be introduce with the [] as : calculator("[27][38]5[18] 64 = 10")
   the dictionnary is kept for future use into global variable : dicNumber
+As third argument you can change the output behaviour
+  (default) calculator("7794075 = 62", clear=False) -> print the result in the stdout
+  calculator("7794075 = 62", clear=True) to return the string as output of the function
 ```
 
 ## Version review :
@@ -62,3 +65,21 @@ V1.2 : add fractionnal values supprt (like: '5.5  3.1415')
 >>> calculator("5.5 10 = 16")
 5.8 base: 16
 ```
+
+V1.2.1 : a quiet parameter wasn't implemented (and other fixes)
+
+now you can choose between get the result into the console (clear=False (default))
+or to get the result (only the string of the number without the base) (clear=True)
+
+```python
+>>> a = calculator("5.2 10 + 38.6 9 * 599046 64 = 16", clear=True)
+>>> a
+'2DDB5979DB.33333'
+```
+
+Note pour les tests de performances
+```python
+>>> import time;time1 = time.time(); a = [calculator("5.2 10 + 38.6 9 * 599046 64 = 16", clear=True) for x in range(10000)] ;time2 = time.time();print((time2-time1)*1000)
+1427.6394 (ms)
+```
+

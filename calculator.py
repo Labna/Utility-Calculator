@@ -99,7 +99,10 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
           "  calculator(newDicNumber=\"base64\") -> base64=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,+,/]\n"+
           "  or you can use yours, exemple: \"calculator(\"PONY 26\", newDicNumber=['Z','X','Y','P','W','V','U','T','S','R','Q','I','M','L','K','J','N','H','G','F','O','E','D','C','B','A']\"\n"+
           "  if a number is out of the dictionnary size it can be introduce with the [] as : calculator(\"[27][38]5[18] 64 = 10\")\n"+
-          "  the dictionnary is kept for future use into global variable : dicNumber")
+          "  the dictionnary is kept for future use into global variable : dicNumber\n"+
+          "As third argument you can change the output behaviour\n"+
+          "  (default) calculator(\"7794075 = 62\", clear=False) -> print the result in the stdout\n"+
+          "  calculator(\"7794075 = 62\", clear=True) to return the string as output of the function")
     elif input == "newDic":
       customDicNumber(raw_input('Enter newDicNumber (min, maj, init, safe, invert, base64, [custom])\nnewDicNumber=').strip())
     elif input == "curDic":
@@ -173,15 +176,18 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
         result = eval(operation)
         if outbase != "" and not date_format :
           result = tobase(result, outbase)
-          print('{} base: {}'.format(result, outbase))
+          resultf = '{} base: {}'.format(result, outbase)
         elif outbase == "" and not date_format :
-          print('{} base: 10'.format(result))
+          resultf = '{} base: 10'.format(result)
         elif outbase != "" and date_format :
           result = unit_date(result, outbase)
-          print('{}{}'.format(result, outbase))
+          resultf = '{}{}'.format(result, outbase)
         else :
           result = mstodate(result)
-          print('{}'.format(result))
+          resultf = '{}'.format(result)
+        if clear :
+          return result
+        print(resultf)
       else :
         print('Missing number or operand in {} (len : {} != {})'.format(input, (len(numlist) - 1), len(operlist)))
     if inoperation :
@@ -251,9 +257,9 @@ def tobase (innumber, base):
   innumber = int(innumber)
   frac = float('0.{}'.format(frac))
   while innumber != 0:
-    scale = innumber % base
+    scale = int(innumber % base)
     if scale < len(dicNumber) :
-      number = dicNumber[innumber % base] + number
+      number = '{}{}'.format(dicNumber[scale], number)
     else :
       number = '[{}]{}'.format(scale, number)
     innumber = (innumber - scale) / base
