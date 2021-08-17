@@ -6,6 +6,7 @@ import re
 
 
 dicNumber=[]
+nbdecimal=5
 def initDicNumber():
   #  1 2 3 4 5 6 7 8 9 A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z  Α  Β  Γ  Δ  Ε  Ζ  Η  Θ  Ι  Κ  Λ  Μ  Ν  Ξ  Ο  Π  Ρ  ς  Σ  Τ  Υ  Φ  Χ  Ψ  Ω  α  β  γ  δ  ε  ζ  η  θ  ι  κ  λ  μ  ν  ξ  ο  π  ρ  ς  σ  τ  υ  φ  χ  ψ  ω   
   #                   10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99100101102103104105106107108109110111
@@ -97,6 +98,7 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
           "  calculator(newDicNumber=\"invert\") -> invert=[0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]\n"+
           "  calculator(newDicNumber=\"base64\") -> base64=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,+,/]\n"+
           "  or you can use yours, exemple: \"calculator(\"PONY 26\", newDicNumber=['Z','X','Y','P','W','V','U','T','S','R','Q','I','M','L','K','J','N','H','G','F','O','E','D','C','B','A']\"\n"+
+          "  if a number is out of the dictionnary size it can be introduce with the [] as : calculator(\"[27][38]5[18] 64 = 10\")\n"+
           "  the dictionnary is kept for future use into global variable : dicNumber")
     elif input == "newDic":
       customDicNumber(raw_input('Enter newDicNumber (min, maj, init, safe, invert, base64, [custom])\nnewDicNumber=').strip())
@@ -136,20 +138,7 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
         elif number == "" :
           number = txt
         else : # un nombre est enregisterer il faut convertir sa base
-          decalage = number.find(".")
-          if decalage == -1 :
-            decalage = number.find(",")
-            if decalage == -1 :
-              decalage = 0
-            else :
-              number = number.replace(",","")
-              decalage = len(number) - decalage
-          else :
-            number = number.replace(".","")
-            decalage = len(number) - decalage
-          number = str(todec(number, txt))
-          if decalage != 0 :
-            number = "{}.{}".format(number[:len(number) - decalage], number[len(number) - decalage:])
+          number = str(todec(number.replace(',', '.'), int(txt)))
       if outbase == "" :
         number, date_format = normal_number(number, date_format)
         numlist.append(number)
@@ -198,7 +187,6 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
     if inoperation :
       break
 
-
 def normal_number (number, date_format) :
   ### Convert number with strange format like hour and date C,D,y,w,d,h,m,s,ms ###
   final = 0
@@ -226,53 +214,61 @@ def normal_number (number, date_format) :
       number = "{}.{}".format(number[:len(number) - decalage], number[len(number) - decalage:])
   return [number, date_format]
 
-def todec (innumber, base):
-  if len(innumber) > 1 :
-    decalage = innumber.find(".")
-    if decalage != -1:
-      innumber = innumber.replace(".","")
-      decalage = len(innumber) - decalage
-    if innumber[-1] != "]" :
+def todec(innumber, base):
+  innumber, frac = innumber.split('.') if innumber.find('.') != -1 else [innumber, '']
+  unit = value = 0
+  valfrac = float(0)
+  if len(innumber) != 0:
+    if innumber[-1] != "]":
       innumber, unit = innumber[:-1], innumber[-1]
-      try :
-        value=dicNumber.index(unit)
-      except:
-        value = int(unit)
-      value += (int(todec(innumber, base)) * int(base))
-    else :
-      position = innumber.rfind('[')
-      innumber , unit = innumber[:position], innumber[position:]
-      value = int(unit.strip('[]')) + (int(todec(innumber, base)) * int(base))
-    if decalage != -1:
-      value = str(value)
-      value= float("{}.{}".format(value[:len(value) - decalage], value[len(value) - decalage:]))
-    return value
-  elif len(innumber) == 1 :
-    value = 0
-    try :
-      value = dicNumber.index(innumber)
-    except:
-      value = innumber
-    return value
-  else :
-    return 0
-
+    else:
+      pos = innumber.rfind('[')
+      innumber, unit = innumber[:position], innumber[position:].strip('[]')
+    value = dicNumber.index(unit) if dicNumber.count(unit) != 0 else int(unit)
+    if len(innumber) != 0:
+      value += (todec(innumber, base) * base)
+  if len(frac) != 0:
+    if frac[0] != "[":
+      frac, unit = frac[1:], frac[0] # frac[0] === frac[:1]
+    else:
+      pos = frac.find(']')
+      frac, unit = frac[pos + 1:], frac[:pos + 1].strip('[]')
+    valfrac = (dicNumber.index(unit) if dicNumber.count(unit) != 0 else int(unit)) / base
+    if len(frac) != 0:
+      valfrac += (todec(".{}".format(frac), base) / base)
+    value += valfrac
+  return value
 
 def tobase (innumber, base):
   number=""
   neg = False
+  base = int(base)
   if innumber < 0 :
     innumber = abs(innumber)
     neg = True
-  while int(innumber) != 0:
-    scale = int(innumber) % int(base)
+  innumber = str(innumber)
+  innumber, frac = innumber.split('.') if innumber.find('.') != -1 else [innumber, 0]
+  innumber = int(innumber)
+  frac = float('0.{}'.format(frac))
+  while innumber != 0:
+    scale = innumber % base
     if scale < len(dicNumber) :
-      number = dicNumber[int(innumber) % int(base)] + number
+      number = dicNumber[innumber % base] + number
     else :
       number = '[{}]{}'.format(scale, number)
-    innumber = (int(innumber) - scale) / int(base)
-  return ('' if not neg else '-' ) + number.decode('latin_1')
-
+    innumber = (innumber - scale) / base
+  if frac > 0 :
+    number+= '.'
+    global nbdecimal
+    decibase = base
+    for x in range(nbdecimal):
+      scale = int(frac / (1 / decibase))
+      frac = frac - (scale * (1 / decibase))
+      number += dicNumber[scale] if len(dicNumber) > scale else '[{}]'.format(scale)
+      if frac == 0:
+        break
+      decibase = decibase * base
+  return ('' if not neg else '-' ) + number # .decode('latin_1')
 
 def unit_date(date, unit) :
   converter = {
@@ -288,7 +284,6 @@ def unit_date(date, unit) :
   }
   return str(float(date) / converter[unit] )
 
-  
 def mstodate(ms) :
   string = ""
   unit  = ['y','d','h','m','s','ms']
@@ -326,8 +321,8 @@ def customDicNumber(newDicNumber) :
     print("Error unknown newDicNumber")
     return False
   return True
-  
-  
+
+
 hfrom = hto = hdif = ['0','0','0']
 def flathour(hfrom) :
   hto[1] = (int(hto[0]) - int(hfrom[0])) * 60 + int(hto[1])
