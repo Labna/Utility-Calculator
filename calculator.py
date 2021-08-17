@@ -223,7 +223,7 @@ def todec(innumber, base):
       innumber, unit = innumber[:-1], innumber[-1]
     else:
       pos = innumber.rfind('[')
-      innumber, unit = innumber[:position], innumber[position:].strip('[]')
+      innumber, unit = innumber[:pos], innumber[pos:].strip('[]')
     value = dicNumber.index(unit) if dicNumber.count(unit) != 0 else int(unit)
     if len(innumber) != 0:
       value += (todec(innumber, base) * base)
