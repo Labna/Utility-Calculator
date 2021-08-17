@@ -44,13 +44,21 @@ As second argument you can change the number dictionnary
   calculator(newDicNumber="invert") -> invert=[0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]
   calculator(newDicNumber="base64") -> base64=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,+,/]
   or you can use yours, exemple: "calculator("PONY 26", newDicNumber=['Z','X','Y','P','W','V','U','T','S','R','Q','I','M','L','K','J','N','H','G','F','O','E','D','C','B','A']"
+  if a number is out of the dictionnary size it can be introduce with the [] as : calculator("[27][38]5[18] 64 = 10")
   the dictionnary is kept for future use into global variable : dicNumber
 ```
 
-Version review :
+## Version review :
 V1.1 : add bracket support '() [] {}'
 
 ```python
 >>> calculator("( 34384s - 2550s ) * ( 25433 / 83460s )")
 2h41m40s864ms
+```
+
+V1.2 : add fractionnal values supprt (like: '5.5  3.1415')
+
+```python
+>>> calculator("5.5 10 = 16")
+5.8 base: 16
 ```
