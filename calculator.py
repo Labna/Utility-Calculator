@@ -78,6 +78,9 @@ cs = { # Color set
 def calculator(inoperation = False, newDicNumber= False, clear=False) :
   if newDicNumber and not customDicNumber(newDicNumber):
     return
+  if clear :
+    csBackup = cs
+    cs = {'d':'','v':'','b':'','o':'','r':'','f':''}
   while True : # my game loop
     input = ""
     if inoperation :
@@ -193,6 +196,7 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
           result = mstodate(result)
           resultf = '{}'.format(result)
         if clear :
+          cs = csBackup
           return result
         print(resultf)
       else :
