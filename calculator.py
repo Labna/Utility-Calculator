@@ -91,7 +91,7 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
         '  {v}5 {o}+ {v}25\n'.format(**cs) +
         '  {v}15 {b}8 {o}+ {v}21 {d}(the 2nd number ({b}8{d}) is {b}the base{d})\n'.format(**cs) +
         '  {v}438{b}m {r}= {b}h {d}(get the decimal value of {b}hour{d}, otherwise get full convertion (like : {v}1{b}y{v}2{b}d{v}3{b}h{v}4{b}m{v}5{b}s{v}6{b}ms{d})\n'.format(**cs) +
-        '  {v}5{b}h{v}31{b}m{v}0{b}s{v}145{b}ms {o}+ {v}2{b}y\033[32{b}m{v}4{b}d{v}18{b}h{v}32{b}m{v}42{b}s {o}+ {v}4{b}h{v}32{b}s {o}+ {v}484{b}s {d}(time operation is possible (the order is : {b}CDydhmsms {d}Century Decade year day hour minute second milisecond ({b}ms {d}is the only 2 char unit))\n'.format(**cs) +
+        '  {v}5{b}h{v}31{b}m{v}0{b}s{v}145{b}ms {o}+ {v}2{b}y{v}4{b}d{v}18{b}h{v}32{b}m{v}42{b}s {o}+ {v}4{b}h{v}32{b}s {o}+ {v}484{b}s {d}(time operation is possible (the order is : {b}CDydhmsms {d}Century Decade year day hour minute second milisecond ({b}ms {d}is the only 2 char unit))\n'.format(**cs) +
         '  {v}45 {b}13 {o}* {v}12 {b}4 {r}= {b}16 {d}(the answer will be converted by the base mentionned after the {r}={d})\n'.format(**cs) +
         '  {f}newDic {d}(to change current dicNumber)\n'.format(**cs) +
         '  {f}curDic {d}(to get current dicNumber)\n'.format(**cs) +

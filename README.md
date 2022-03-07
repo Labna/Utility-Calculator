@@ -83,3 +83,43 @@ Note pour les tests de performances
 1427.6394 (ms)
 ```
 
+V1.2.2 : Get some colors
+
+I changed my OS recently and get the idea to add some color to the output string, using standard [ANSI](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) `\033[30m`. Used in the help section and in results (number + base)
+As any custome features, it's better to be customisable by the user.
+
+To edit the color set, all is stored in the dictionnay `cs`
+
+```python
+>>> cs = {
+  'd': '\033[0m',  # set default color value white/black : \033[0m
+  'v': '\033[32m', # value green : \033[32m
+  'b': '\033[36m', # base or unit cyan : \033[36m
+  'o': '\033[31m', # opertator +, -, *, /... red : \033[31m
+  'r': '\033[33m', # result = orange : \033[33m
+  'f': '\033[37m'} # function or variable lightgrey : \033[37m
+## Other colors :
+# black='\033[30m'
+# red='\033[31m'
+# green='\033[32m'
+# orange='\033[33m'
+# blue='\033[34m'
+# purple='\033[35m'
+# cyan='\033[36m'
+# lightgrey='\033[37m'
+# darkgrey='\033[90m'
+# lightred='\033[91m'
+# lightgreen='\033[92m'
+# yellow='\033[93m'
+# lightblue='\033[94m'
+# pink='\033[95m'
+# lightcyan='\033[96m'
+
+>>> cs['v'] = '\033[95m'
+>>> cs['d'] = '\033[32m'
+```
+
+To remove all colors :
+```python
+>>> cs = {'d':'','v':'','b':'','o':'','r':'','f':''}
+```
