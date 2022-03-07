@@ -66,7 +66,14 @@ brackets =[
   [')', False],
   [']', False],
   ['}', False]]
-
+cs = { # Color set
+  'd': '\033[0m',  # set default color value white/black : \033[0m
+  'v': '\033[32m', # value green : \033[32m
+  'b': '\033[36m', # base or unit cyan : \033[36m
+  'o': '\033[31m', # opertator +, -, *, /... red : \033[31m
+  'r': '\033[33m', # result = orange : \033[33m
+  'f': '\033[37m'} # function or variable lightgrey : \033[37m
+# black='\033[30m' red='\033[31m' green='\033[32m' orange='\033[33m' blue='\033[34m' purple='\033[35m' cyan='\033[36m' lightgrey='\033[37m' darkgrey='\033[90m' lightred='\033[91m' lightgreen='\033[92m' yellow='\033[93m' lightblue='\033[94m' pink='\033[95m' lightcyan='\033[96m'
 
 def calculator(inoperation = False, newDicNumber= False, clear=False) :
   if newDicNumber and not customDicNumber(newDicNumber):
@@ -80,29 +87,29 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
     date_format = False
     
     if input == "help" :
-      print('write operation like :\n' +
-        '  5 + 5\n' +
-        '  15 8 + 21 (the 2nd number (8) is the base)\n' +
-        '  438m = h (get the decimal value of hour, otherwise get full convertion (like : 1y2d3h4m5s6ms)\n' +
-        '  5h31m0s145ms + 2y4d18h32m42s + 4h32s + 484s (time operation is possible (the order is : CDydhmsms Century Decade year day hour minute second milisecond (ms is the only 2 char unit))\n' +
-        '  45 13 * 12 4 = 16 (the answer will be converted by the base mentionned after the =)\n' +
-        '  newDic (to change current dicNumber)\n'+
-        '  curDic (to get current dicNumber)\n'
+      print('write operation like :\n'.format(**cs) +
+        '  {v}5 {o}+ {v}25\n'.format(**cs) +
+        '  {v}15 {b}8 {o}+ {v}21 {d}(the 2nd number ({b}8{d}) is {b}the base{d})\n'.format(**cs) +
+        '  {v}438{b}m {r}= {b}h {d}(get the decimal value of {b}hour{d}, otherwise get full convertion (like : {v}1{b}y{v}2{b}d{v}3{b}h{v}4{b}m{v}5{b}s{v}6{b}ms{d})\n'.format(**cs) +
+        '  {v}5{b}h{v}31{b}m{v}0{b}s{v}145{b}ms {o}+ {v}2{b}y\033[32{b}m{v}4{b}d{v}18{b}h{v}32{b}m{v}42{b}s {o}+ {v}4{b}h{v}32{b}s {o}+ {v}484{b}s {d}(time operation is possible (the order is : {b}CDydhmsms {d}Century Decade year day hour minute second milisecond ({b}ms {d}is the only 2 char unit))\n'.format(**cs) +
+        '  {v}45 {b}13 {o}* {v}12 {b}4 {r}= {b}16 {d}(the answer will be converted by the base mentionned after the {r}={d})\n'.format(**cs) +
+        '  {f}newDic {d}(to change current dicNumber)\n'.format(**cs) +
+        '  {f}curDic {d}(to get current dicNumber)\n'.format(**cs) +
         'press enter to leave (empty entry)'
       )
       if inoperation :
         print("As second argument you can change the number dictionnary\n" +
-          "  (default) calculator(\"Exemple 62 + of 62 + Calcul 62 = 19\", \"safe\") ->  safe=[0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]\n"+
-          "  calculator(\"def 26\", \"min\") -> min=[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]\n"+
-          "  calculator(\"SPQR 26\", \"maj\") -> maj=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]\n"+
-          "  calculator(newDicNumber=\"invert\") -> invert=[0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]\n"+
-          "  calculator(newDicNumber=\"base64\") -> base64=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,+,/]\n"+
-          "  or you can use yours, exemple: \"calculator(\"PONY 26\", newDicNumber=['Z','X','Y','P','W','V','U','T','S','R','Q','I','M','L','K','J','N','H','G','F','O','E','D','C','B','A']\"\n"+
-          "  if a number is out of the dictionnary size it can be introduce with the [] as : calculator(\"[27][38]5[18] 64 = 10\")\n"+
+          "  (default) calculator(\"{v}Exemple {b}62 {o}+ {v}of {b}62 {o}+ {v}Calcul {b}62 {r}= {b}19{d}\", \"{f}safe{d}\") ->  safe=[{v}0{d},{v}1{d},{v}2{d},{v}3{d},{v}4{d},{v}5{d},{v}6{d},{v}7{d},{v}8{d},{v}9{d},{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d},{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d}]\n".format(**cs) +
+          "  calculator(\"{v}def {b}26{d}\", \"{f}min{d}\") -> min=[{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d}]\n".format(**cs) +
+          "  calculator(\"{v}SPQR {b}26{d}\", \"{f}maj{d}\") -> maj=[{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d}]\n".format(**cs) +
+          "  calculator({f}newDicNumber{d}=\"{f}invert{d}\") -> invert=[{v}0{d},{v}1{d},{v}2{d},{v}3{d},{v}4{d},{v}5{d},{v}6{d},{v}7{d},{v}8{d},{v}9{d},{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d},{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d}]\n".format(**cs) +
+          "  calculator({f}newDicNumber{d}=\"{f}base64{d}\") -> base64=[{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d},{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d},{v}0{d},{v}1{d},{v}2{d},{v}3{d},{v}4{d},{v}5{d},{v}6{d},{v}7{d},{v}8{d},{v}9{d},{v}+{d},{v}/{d}]\n".format(**cs) +
+          "  or you can use yours, exemple: \"calculator(\"{v}PONY {b}26\", {f}newDicNumber{d}=['{v}Z{d}','{v}X{d}','{v}Y{d}','{v}P{d}','{v}W{d}','{v}V{d}','{v}U{d}','{v}T{d}','{v}S{d}','{v}R{d}','{v}Q{d}','{v}I{d}','{v}M{d}','{v}L{d}','{v}K{d}','{v}J{d}','{v}N{d}','{v}H{d}','{v}G{d}','{v}F{d}','{v}O{d}','{v}E{d}','{v}D{d}','{v}C{d}','{v}B{d}','{v}A{d}']\"\n".format(**cs) +
+          "  if a number is out of the dictionnary size it can be introduce with the [] as : calculator(\"{v}[27][38]5[18] {b}64 {r}= {b}10{d}\")\n".format(**cs) +
           "  the dictionnary is kept for future use into global variable : dicNumber\n"+
           "As third argument you can change the output behaviour\n"+
-          "  (default) calculator(\"7794075 = 62\", clear=False) -> print the result in the stdout\n"+
-          "  calculator(\"7794075 = 62\", clear=True) to return the string as output of the function")
+          "  (default) calculator(\"{v}7794075 {r}= {b}62{d}\", {f}clear{d}=False) -> print the result in the stdout\n".format(**cs) +
+          "  calculator(\"{v}7794075 {r}= {b}62{d}\", {f}clear{d}=True) to return the string as output of the function".format(**cs))
     elif input == "newDic":
       customDicNumber(raw_input('Enter newDicNumber (min, maj, init, safe, invert, base64, [custom])\nnewDicNumber=').strip())
     elif input == "curDic":
@@ -176,12 +183,12 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
         result = eval(operation)
         if outbase != "" and not date_format :
           result = tobase(result, outbase)
-          resultf = '{} base: {}'.format(result, outbase)
+          resultf = '{v}{0} {d}base: {b}{1}{d}'.format(result, outbase, **cs)
         elif outbase == "" and not date_format :
-          resultf = '{} base: 10'.format(result)
+          resultf = '{v}{0} {d}base: {b}10{d}'.format(result, **cs)
         elif outbase != "" and date_format :
           result = unit_date(result, outbase)
-          resultf = '{}{}'.format(result, outbase)
+          resultf = '{v}{0}{b}{1}{d}'.format(result, outbase, **cs)
         else :
           result = mstodate(result)
           resultf = '{}'.format(result)
@@ -189,7 +196,7 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
           return result
         print(resultf)
       else :
-        print('Missing number or operand in {} (len : {} != {})'.format(input, (len(numlist) - 1), len(operlist)))
+        print('Missing {v}number {d}or {b}operand {d}in {0} (len : {1} != {2})'.format(input, (len(numlist) - 1), len(operlist), **cs))
     if inoperation :
       break
 
@@ -298,10 +305,10 @@ def mstodate(ms) :
   for uni in unit : 
     scale = int(float(ms) / value[count])
     if scale > 0 :
-      string += str(scale) + uni
+      string += cs['v'] + str(scale) + cs['b'] + uni
       ms = float(ms) - (scale * value[count])
     count+=1
-  return string
+  return string + cs['d']
 
 def customDicNumber(newDicNumber) :
   global dicNumber
