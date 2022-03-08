@@ -52,21 +52,21 @@ As third argument you can change the output behaviour
 ```
 
 ## Version review :
-V1.1 : add bracket support '() [] {}'
+### V1.1 : add bracket support '() [] {}'
 
 ```python
 >>> calculator("( 34384s - 2550s ) * ( 25433 / 83460s )")
 2h41m40s864ms
 ```
 
-V1.2 : add fractionnal values supprt (like: '5.5  3.1415')
+### V1.2 : add fractionnal values supprt (like: '5.5  3.1415')
 
 ```python
 >>> calculator("5.5 10 = 16")
 5.8 base: 16
 ```
 
-V1.2.1 : a quiet parameter wasn't implemented (and other fixes)
+### V1.2.1 : a quiet parameter wasn't implemented (and other fixes)
 
 now you can choose between get the result into the console (clear=False (default))
 or to get the result (only the string of the number without the base) (clear=True)
@@ -83,7 +83,7 @@ Note pour les tests de performances
 1427.6394 (ms)
 ```
 
-V1.2.2 : Get some colors
+### V1.2.2 : Get some colors
 
 I changed my OS recently and get the idea to add some color to the output string, using standard [ANSI](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) `\033[30m`. Used in the help section and in results (number + base)
 As any custome features, it's better to be customisable by the user.
@@ -123,3 +123,10 @@ To remove all colors :
 ```python
 >>> cs = {'d':'','v':'','b':'','o':'','r':'','f':''}
 ```
+
+### V1.3 : a good config file
+
+I moved all customisable parts in one config file : `config.json`.  
+Obviously, it makes me change few things in code, but I think it's for better. None of the previous settings have changed, just put together in a more understandable place.
+
+
