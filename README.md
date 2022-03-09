@@ -129,4 +129,33 @@ To remove all colors :
 I moved all customisable parts in one config file : `config.json`.  
 Obviously, it makes me change few things in code, but I think it's for better. None of the previous settings have changed, just put together in a more understandable place.
 
+An exemple of usefull changes in settings : time calculation
+If you neeed really thin time calculation like femto-seconds
+```json
+{
+  "date_re":[
+    ["([\\d\\.]+?)h", 1],
+    ["([\\d\\.]+?)m(?!s)", 60],
+    ["([\\d\\.]+?)s", 60],
+    ["([\\d\\.]+?)ms", 1000],
+    ["([\\d\\.]+?)u", 1000],
+    ["([\\d\\.]+?)n", 1000],
+    ["([\\d\\.]+?)p", 1000],
+    ["([\\d\\.]+?)f", 1000]
+  ],
+    "unit_date":{
+    "h" : 3600000000000000000,
+    "m" : 60000000000000000, 
+    "s" : 1000000000000000,
+    "ms" : 1000000000000,
+    "u" : 1000000000,
+    "n" : 1000000,
+    "p" : 1000,
+    "f" : 1
+  },
+}
+```
+I hope this settings are not too brainfuck...
+The Date_re(gex) is how many you need to get 1 of the line above. (1000ms turn into 1s)  
+The Unit_date is how many of your minimal value represent 1 of this unit (1h = 3600000 miliseconds)
 
