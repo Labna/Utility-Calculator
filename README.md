@@ -14,6 +14,12 @@ and python invite you to interact :
 to get help use :
 ``` >>> calculator('help') ```
 
+> For Windows users :  
+> To be able to view with colors, you'll need to enable some features in CMD/PowerShell  
+> There is 2 ways for doing so :  
+> 1. open REGEDIT.exe and add "VirtualTerminalLevel"[DWORD]='1' in HKEY_CURRENT_USER\Console
+> 2. use this command in CMD : `reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1`
+
 #### exemples
 1.
 ```python
