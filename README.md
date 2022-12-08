@@ -14,12 +14,6 @@ and python invite you to interact :
 to get help use :
 ``` >>> calculator('help') ```
 
-> For Windows users :  
-> To be able to view with colors, you'll need to enable some features in CMD/PowerShell  
-> There is 2 ways for doing so :  
-> 1. open REGEDIT.exe and add "VirtualTerminalLevel"[DWORD]='1' in HKEY_CURRENT_USER\Console
-> 2. use this command in CMD : `reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1`
-
 #### exemples
 1.
 ```python
@@ -162,6 +156,35 @@ If you neeed really thin time calculation like femto-seconds
 }
 ```
 I hope this settings are not too brainfuck...
-The Date_re(gex) is how many you need to get 1 of the line above. (1000ms turn into 1s)  
+The Date_re*(gex)* is how many you need to get 1 of the line above. (1000ms turn into 1s)  
 The Unit_date is how many of your minimal value represent 1 of this unit (1h = 3600000 miliseconds)
 
+### V1.3.1 : Better color support
+
+I was on Microsoft Winodows OS, and trying to get color in this (not so) old CMD.exe.  
+I found 2 main solutions : edit the registery or do some obfuscated black magic code.
+
+1. Edit the registery :
+    a. open REGEDIT.exe and add "VirtualTerminalLevel"[DWORD]='1' in HKEY_CURRENT_USER\Console
+    b. use this command in CMD : `reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1`
+2. change the value of the `config.json` file :
+    ```json
+    {
+      "cmdSupport": true
+    }
+    ```
+
+For better contrast with the default color of the CMD I propose this settings :
+```json
+{
+  "colorSet" : {
+    "d": "\u001b[0m",
+    "v": "\u001b[92m",
+    "b": "\u001b[36m",
+    "o": "\u001b[31m",
+    "r": "\u001b[33m",
+    "f": "\u001b[90m"
+}
+```
+
+Also, I added a lnk file to get instant launch and integration in Windows, **YOU HAVE TO EDIT THE PROPERTIES** to get it works, especially "Start in" value, whitch have to point to the folder where the calculator.py is located.
