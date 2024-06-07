@@ -2,19 +2,20 @@
   "nbdecimal": 5,
   "defaultDicNumber": "safe",
   "dicNumber": {
-    "safe":["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
-    "init":[
+    "safe" : ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
+    "init" : [
       "0","1","2","3","4","5","6","7","8","9",
       "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
       "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
       "\u0391","\u0392","\u0393","\u0394","\u0395","\u0396","\u0397","\u0398","\u0399","\u039A","\u039B","\u039C","\u039D","\u039E","\u039F","\u03A0","\u03A1","\u03A2","\u03A3","\u03A4","\u03A5","\u03A6","\u03A7","\u03A8","\u03A9",
       "\u03B1","\u03B2","\u03B3","\u03B4","\u03B5","\u03B6","\u03B7","\u03B8","\u03B9","\u03BA","\u03BB","\u03BC","\u03BD","\u03BE","\u03BF","\u03C0","\u03C1","\u03C2","\u03C3","\u03C4","\u03C5","\u03C6","\u03C7","\u03C8","\u03C9"
     ],
-    "maj":["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
-    "min":["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
+    "maj"  : ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
+    "min"  : ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"],
     "invert":["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
     "base64":["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9","+","/"],
-    "base32":["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","2","3","4","5","6",  "7"]
+    "base32":["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","2","3","4","5","6","7"],
+    "duodec":["0","1","2","3","4","5","6","7","8","9","\u218A","\u218B"]
   },
   "date_re":[
     ["([\\d\\.]+?)C", 1],
@@ -55,13 +56,14 @@
   ],
   "colorSet" : {
     "d": "\u001b[0m",
-    "v": "\u001b[32m",
+    "v": "\u001b[92m",
     "b": "\u001b[36m",
     "o": "\u001b[31m",
     "r": "\u001b[33m",
-    "f": "\u001b[37m"
+    "f": "\u001b[90m",
+    "unusedColors": "black='\u001b[30m' red='\u001b[31m' green='\u001b[32m' orange='\u001b[33m' blue='\u001b[34m' purple='\u001b[35m' cyan='\u001b[36m' lightgrey='\u001b[37m' darkgrey='\u001b[90m' lightred='\u001b[91m' lightgreen='\u001b[92m' yellow='\u001b[93m' lightblue='\u001b[94m' pink='\u001b[95m' lightcyan='\u001b[96m'"
   },
   "helpString": "Write operation like :\n  {v}5 {o}+ {v}25\n  {v}15 {b}8 {o}+ {v}21 {d}(the 2nd number ({b}8{d}) is {b}the base{d})\n  {v}438{b}m {r}= {b}h {d}(get the decimal value of {b}hour{d}, otherwise get full convertion (like : {v}1{b}y{v}2{b}d{v}3{b}h{v}4{b}m{v}5{b}s{v}6{b}ms{d})\n  {v}5{b}h{v}31{b}m{v}0{b}s{v}145{b}ms {o}+ {v}2{b}y{v}4{b}d{v}18{b}h{v}32{b}m{v}42{b}s {o}+ {v}4{b}h{v}32{b}s {o}+ {v}484{b}s {d}(time operation is possible (the order is : {b}CDydhmsms {d}Century Decade year day hour minute second milisecond ({b}ms {d}is the only 2 char unit))\n  {v}45 {b}13 {o}* {v}12 {b}4 {r}= {b}16 {d}(the answer will be converted by the base mentionned after the {r}={d})\n  {f}newDic {d}(to change current dicNumber)\n  {f}curDic {d}(to get current dicNumber)\npress enter to leave (empty entry)",
   "helpString2": "As second argument you can change the number dictionnary\n  (default) calculator(\"{v}Exemple {b}62 {o}+ {v}of {b}62 {o}+ {v}Calcul {b}62 {r}= {b}19{d}\", \"{f}safe{d}\") ->  safe=[{v}0{d},{v}1{d},{v}2{d},{v}3{d},{v}4{d},{v}5{d},{v}6{d},{v}7{d},{v}8{d},{v}9{d},{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d},{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d}]\n  calculator(\"{v}def {b}26{d}\", \"{f}min{d}\") -> min=[{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d}]\n  calculator(\"{v}SPQR {b}26{d}\", \"{f}maj{d}\") -> maj=[{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d}]\n  calculator({f}newDicNumber{d}=\"{f}invert{d}\") -> invert=[{v}0{d},{v}1{d},{v}2{d},{v}3{d},{v}4{d},{v}5{d},{v}6{d},{v}7{d},{v}8{d},{v}9{d},{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d},{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d}]\n  calculator({f}newDicNumber{d}=\"{f}base64{d}\") -> base64=[{v}A{d},{v}B{d},{v}C{d},{v}D{d},{v}E{d},{v}F{d},{v}G{d},{v}H{d},{v}I{d},{v}J{d},{v}K{d},{v}L{d},{v}M{d},{v}N{d},{v}O{d},{v}P{d},{v}Q{d},{v}R{d},{v}S{d},{v}T{d},{v}U{d},{v}V{d},{v}W{d},{v}X{d},{v}Y{d},{v}Z{d},{v}a{d},{v}b{d},{v}c{d},{v}d{d},{v}e{d},{v}f{d},{v}g{d},{v}h{d},{v}i{d},{v}j{d},{v}k{d},{v}l{d},{v}m{d},{v}n{d},{v}o{d},{v}p{d},{v}q{d},{v}r{d},{v}s{d},{v}t{d},{v}u{d},{v}v{d},{v}w{d},{v}x{d},{v}y{d},{v}z{d},{v}0{d},{v}1{d},{v}2{d},{v}3{d},{v}4{d},{v}5{d},{v}6{d},{v}7{d},{v}8{d},{v}9{d},{v}+{d},{v}/{d}]\n  or you can use yours, exemple: \"calculator(\"{v}PONY {b}26\", {f}newDicNumber{d}=['{v}Z{d}','{v}X{d}','{v}Y{d}','{v}P{d}','{v}W{d}','{v}V{d}','{v}U{d}','{v}T{d}','{v}S{d}','{v}R{d}','{v}Q{d}','{v}I{d}','{v}M{d}','{v}L{d}','{v}K{d}','{v}J{d}','{v}N{d}','{v}H{d}','{v}G{d}','{v}F{d}','{v}O{d}','{v}E{d}','{v}D{d}','{v}C{d}','{v}B{d}','{v}A{d}']\"\n  if a number is out of the dictionnary size it can be introduce with the [] as : calculator(\"{v}[27][38]5[18] {b}64 {r}= {b}10{d}\")\n  the dictionnary is kept for future use into global variable : dicNumber\nAs third argument you can change the output behaviour\n  (default) calculator(\"{v}7794075 {r}= {b}62{d}\", {f}clear{d}=False) -> print the result in the stdout\n  calculator(\"{v}7794075 {r}= {b}62{d}\", {f}clear{d}=True) to return the string as output of the function",
-  "cmdSupport": false
+  "cmdSupport": true
 }

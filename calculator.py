@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 # import sys
 import re
 import json
 
+import sys
+from os.path import dirname
+
 configFile = 'config.json'
+
+if len(sys.argv) > 1:
+  configFile = dirname(sys.argv[0]) + '\\' + configFile
+
 #  ---- Import all data from config file ----  #
 cf = open(configFile, 'r')
 config = json.load(cf)
@@ -31,7 +39,7 @@ cf.close()
 
 if cmdSupport:
   import os
-  os.system()
+  os.system('')
   del os
 
 #  ----  The real function, I know it's weard but so fast and efficient  ----  #
@@ -43,23 +51,23 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
     csBackup = cs
     cs = {'d':'','v':'','b':'','o':'','r':'','f':''}
   while True : # my game loop
-    input = ""
+    txtInput = ""
     if inoperation :
-      input = inoperation.strip()
+      txtInput = inoperation.strip()
     else :
-      input = raw_input('Enter an operation (or help)\n> ').strip() # remove firsts and lasts spaces/tab...
+      txtInput = input('Enter an operation (or help)\n> ').strip() # remove firsts and lasts spaces/tab...
     date_format = False
     
-    if input == "help" :
+    if txtInput == "help" :
       print(helpString.format(**cs))
       if inoperation :
         print(helpString2.format(**cs))
-    elif input == "newDic":
-      customDicNumber(raw_input('Enter newDicNumber (min, maj, init, safe, invert, base64, [custom])\nnewDicNumber=').strip())
-    elif input == "curDic":
+    elif txtInput == "newDic":
+      customDicNumber(input('Enter newDicNumber (min, maj, init, safe, invert, base64, [custom])\nnewDicNumber=').strip())
+    elif txtInput == "curDic":
       global dicNumber
       print(dicNumber)
-    elif input == "" :
+    elif txtInput == "" :
       break
     else :
       operation = ""
@@ -68,7 +76,7 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
       numlist=[]
       operlist=[]
       bracklist=[]
-      for txt in input.split(' ') :
+      for txt in txtInput.split(' ') :
         if len(txt) == 1 :
           conti = False
           for ope in operators : # find operator and add to the list
@@ -141,7 +149,7 @@ def calculator(inoperation = False, newDicNumber= False, clear=False) :
           return result
         print(resultf)
       else :
-        print('Missing {v}number {d}or {b}operand {d}in {0} (len : {1} != {2})'.format(input, (len(numlist) - 1), len(operlist), **cs))
+        print('Missing {v}number {d}or {b}operand {d}in {0} (len : {1} != {2})'.format(txtInput, (len(numlist) - 1), len(operlist), **cs))
     if inoperation :
       break
 
@@ -150,6 +158,7 @@ def normal_number (number, date_format) :
   global unitDateConverter
   global date_re
   final = 0
+  print("ligne 162,number={}".format(number))
   number = number.replace(',','.')
   if re.search('(\d({}))'.format('|'.join(unitDateConverter)),number) :
     date_format = True
@@ -166,11 +175,14 @@ def normal_number (number, date_format) :
   else :
     decalage = number.find(".")
     if decalage == -1 :
-      number = todec(number, 10)
+      # number = todec(number, 10)
+      pass
     else :
+      # - - - - - Parti à revoir pour les cas de dicNumber décimal
       number = number.replace(".","")
       decalage = len(number) - decalage
-      number = str(todec(number, 10))
+      # number = str(todec(number, 10))
+      number = str(number)
       number = "{}.{}".format(number[:len(number) - decalage], number[len(number) - decalage:])
   return [number, date_format]
 
@@ -182,10 +194,11 @@ def todec(innumber, base):
   if len(innumber) != 0:
     if innumber[-1] != "]":
       innumber, unit = innumber[:-1], innumber[-1]
+      value = dicNumber.index(unit) if unit in dicNumber else int(unit)
     else:
       pos = innumber.rfind('[')
       innumber, unit = innumber[:pos], innumber[pos:].strip('[]')
-    value = dicNumber.index(unit) if dicNumber.count(unit) != 0 else int(unit)
+      value = int(unit)
     if len(innumber) != 0:
       value += (todec(innumber, base) * base)
   if len(frac) != 0:
@@ -276,4 +289,9 @@ def flathour(hfrom) :
 
   print('diff = {}:{}:{}'.format(hdif[2],hdif[1],hdif[0]))
 
-print("\033[32mCalculator charged !\033[0m")
+
+if len(sys.argv) > 1:
+  calculator(sys.argv[1])
+else :
+  print("\033[92mCalculator charged !\033[0m")
+
