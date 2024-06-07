@@ -158,7 +158,6 @@ def normal_number (number, date_format) :
   global unitDateConverter
   global date_re
   final = 0
-  print("ligne 162,number={}".format(number))
   number = number.replace(',','.')
   if re.search('(\d({}))'.format('|'.join(unitDateConverter)),number) :
     date_format = True
