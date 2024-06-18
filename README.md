@@ -188,3 +188,11 @@ For better contrast with the default color of the CMD I propose this settings :
 ```
 
 Also, I added a lnk file to get instant launch and integration in Windows, **YOU HAVE TO EDIT THE PROPERTIES** to get it works, especially "Start in" value, whitch have to point to the folder where the calculator.py is located.
+
+## 1.3.2 : Custom number dictionnary FIX part 1 and static code analysis
+
+In case of custom dictionnary in cluding number caracters but not in there curent value the programme get a wrong result. I did a fix but it's not full safe actually. The error is still there if you use custom caraters with time calculation.  
+**Temporary solution :** use dictionnary not including the number caraters (`0 1 2 3 4 5 6 7 8 9`) when doing time calculation (~~`> calculator("2Zm32s = h",newDic=['Z','0','1','2','3'])`~~ → `> calculator("SZmESs = h", newDic=['Z','O','I','S','E'])`).  
+For all other kind of calculations the result is correct.
+
+I found a static code analysis tool suitable for me and followed some of it's recomendations, moste for passing from python 2 to python 3.
